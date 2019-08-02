@@ -1,0 +1,27 @@
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.welcome-container {
+    width: 70%;
+    border: 1px solid red;
+    padding: 30px;
+}
+
+.modal {
+    margin-top: 10px;
+}
+
+.column {
+    border:1px solid green;
+    padding:20px;
+    width:200px;
+    height:300px;
+}
