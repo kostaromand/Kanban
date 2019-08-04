@@ -20,7 +20,7 @@ export default class Column extends Component {
     onAddCard(name) {
         const card = {
             name,
-            columnId:this.props.columnInfo.id
+            columnId: this.props.columnInfo.id
         }
         this.props.addnewCard(card);
         this.setState((prevState) => {
@@ -30,21 +30,23 @@ export default class Column extends Component {
 
     render() {
         return (
-            <div className="column">
-               <div>{this.props.columnInfo.name}</div> 
-                {this.props.cards.map(card =>
-                    <Card cardInfo={card} key = {card.id} />
-                )}
-                {this.state.addCardToggle === false
-                    ?
-                    <button onClick={() => { this.changeAddCardToggle() }}>Добавить карточку</button>
-                    :
-                    <InputButton
-                        getValue={(title) => { this.onAddCard(title) }}
-                        buttonText="Добавить"
-                    />
-                }
-            </div>
+            <div>
+                <div className="column">
+                    <div>{this.props.columnInfo.name}</div>
+                    {this.props.cards.map(card =>
+                        <Card cardInfo={card} key={card.id} />
+                    )}
+                    {this.state.addCardToggle === false
+                        ?
+                        <button onClick={() => { this.changeAddCardToggle() }}>Добавить карточку</button>
+                        :
+                        <InputButton
+                            getValue={(title) => { this.onAddCard(title) }}
+                            buttonText="Добавить"
+                        />
+                    }
+                </div>
+            </div>  
         )
     }
 }
