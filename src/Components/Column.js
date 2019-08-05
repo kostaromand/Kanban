@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../css/common.css'
-import Card from './Card';
 import InputButton from './InputButton';
+import CardHeader from './CardHeader';
 
 export default class Column extends Component {
     constructor(props) {
@@ -17,36 +17,56 @@ export default class Column extends Component {
         });
     }
 
-    onAddCard(name) {
-        const card = {
-            name,
-            columnId: this.props.columnInfo.id
-        }
-        this.props.addnewCard(card);
-        this.setState((prevState) => {
+    handleAddCard(title) {
+        this.setState(() => {
             return { addCardToggle: false }
         });
+        const card = {
+            title,
+            columnId: this.props.column.id,
+            description: ""
+        }
+        this.props.onAddNewCard(card);
     }
 
     render() {
         return (
-            <div>
-                <div className="column">
-                    <div>{this.props.columnInfo.name}</div>
-                    {this.props.cards.map(card =>
-                        <Card cardInfo={card} key={card.id} />
-                    )}
-                    {this.state.addCardToggle === false
-                        ?
-                        <button onClick={() => { this.changeAddCardToggle() }}>Добавить карточку</button>
-                        :
+
+            <div className="column">
+                <div className="column-title">
+                    {this.props.inEdit ?
                         <InputButton
-                            getValue={(title) => { this.onAddCard(title) }}
-                            buttonText="Добавить"
+                            onGetValue={(title) => {
+                                this.props.onChangeColumnTitle(this.props.column.id, title)
+                            }}
+                            buttonText="Изменить"
                         />
+                        :
+                        <div
+                            onClick={() => { this.props.onColumnTitleEdit(this.props.column.id) }}
+                        >
+                            {this.props.column.title}
+                        </div>
                     }
                 </div>
-            </div>  
+                {this.props.cards.map(card =>
+                    <CardHeader onClick={this.props.onOpenCard}
+                        id={card.id}
+                        title={card.title}
+                        key={card.id}
+                    />
+                )}
+                {this.state.addCardToggle === false
+                    ?
+                    <button onClick={() => { this.changeAddCardToggle() }}>Добавить карточку</button>
+                    :
+                    <InputButton
+                        onGetValue={(title) => { this.handleAddCard(title) }}
+                        buttonText="Добавить"
+                    />
+                }
+            </div>
+
         )
     }
 }
