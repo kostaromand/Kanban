@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import EditableText from './EditableText';
 
 export default class Card extends Component {
     render() {
@@ -7,6 +8,7 @@ export default class Card extends Component {
                 <div className="card-title">
                     {this.props.card.title}
                 </div>
+                <EditableText/>
             </div>
         )
     }

@@ -26,7 +26,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = INITIAL_STATE;
-    this.handleColumnTitleEdit = this.handleColumnTitleEdit.bind(this);
+    this.handleEditColumnTitle = this.handleEditColumnTitle.bind(this);
     this.handleGetUserName = this.handleGetUserName.bind(this);
     this.handleAddNewCard = this.handleAddNewCard.bind(this);
     this.handleOpenCard = this.handleOpenCard.bind(this);
@@ -71,6 +71,10 @@ export default class App extends React.Component {
     });
   }
 
+  handleEditColumnTitle(id) {
+    this.setState({ columnTitleIdEdit: id })
+  }
+
   handleGetUserName(userName) {
     this.setState((prevState) => {
       const data = { ...prevState.data }
@@ -99,9 +103,7 @@ export default class App extends React.Component {
     this.setState({ openedCardId: id, isCardOpened: true })
   }
 
-  handleColumnTitleEdit(id) {
-    this.setState({ columnTitleIdEdit: id })
-  }
+  
 
   componentDidMount() {
     if (localStorage.getItem("data")) {
@@ -149,7 +151,7 @@ export default class App extends React.Component {
                 onAddNewCard={this.handleAddNewCard}
                 onOpenCard={this.handleOpenCard}
                 onChangeColumnTitle={this.handleChangeColumnTitle}
-                onColumnTitleEdit={this.handleColumnTitleEdit}
+                onEditColumnTitle={this.handleEditColumnTitle}
                 column={column}
                 inEdit={inEdit}
                 cards={cards} />

@@ -4,7 +4,8 @@ export default class EditableText extends Component {
     render() {
         return (
             <div>
-                <textarea/>
+                {this.props.text}
+                <textarea value="adsad"/>
             </div>
         )
     }
