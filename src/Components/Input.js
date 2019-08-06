@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class InputButton extends Component {
+export default class Input extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +19,7 @@ export default class InputButton extends Component {
     render() {
         return (
             <div>
-                <input type="text" onChange={this.onChangeValue} value={this.state.value} />
+                {this.props.render(this.onChangeValue,this.state.value)}
                 <button onClick={() => this.handleGetValue()}>
                     {this.props.buttonText}
                 </button>

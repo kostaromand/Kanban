@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import '../css/common.css'
 import CardHeader from './CardHeader';
-import EditableTitle from './EditableTitle';
+import EditableContent from './EditableContent';
+import InputButton from './InputButton';
 
 export default class Column extends Component {
     constructor(props) {
@@ -22,12 +23,7 @@ export default class Column extends Component {
         this.setState(() => {
             return { addCardToggle: false }
         });
-        const card = {
-            title,
-            columnId: this.props.column.id,
-            description: ""
-        }
-        this.props.onAddNewCard(card);
+        this.props.onAddNewCard(title, this.props.column.id);
     }
 
     handleChangeColumnTitle(title) {
@@ -40,14 +36,15 @@ export default class Column extends Component {
 
     render() {
         return (
-
             <div className="column">
                 <div className="column-title">
-                    <EditableTitle
+                    <EditableContent
                         inEdit={this.props.inEdit}
-                        title={this.props.column.title}
-                        onChangeTitle={this.handleChangeColumnTitle}
-                        onEditTitle={() => { this.handleEditTitle() }}
+                        content={this.props.column.title}
+                        onChangeContent={this.handleChangeColumnTitle}
+                        onEdit={() => { this.handleEditTitle() }}
+                        buttonText="Изменить"
+                        EditComponent={InputButton}
                     />
                 </div>
                 {this.props.cards.map(card =>
@@ -57,11 +54,13 @@ export default class Column extends Component {
                         key={card.id}
                     />
                 )}
-                <EditableTitle
+                <EditableContent
                     inEdit={this.state.addCardToggle}
-                    title="Добавить карточку"
-                    onChangeTitle={(title) => { this.handleAddCard(title) }}
-                    onEditTitle={() => { this.changeAddCardToggle() }}
+                    content="Добавить карточку"
+                    onChangeContent={(title) => { this.handleAddCard(title) }}
+                    onEdit={() => { this.changeAddCardToggle() }}
+                    buttonText="Добавить"
+                    EditComponent={InputButton}
                 />
             </div>
 

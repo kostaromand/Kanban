@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
-export default class InputButton extends Component {
+export default class TextAreaButton extends Component {
     constructor(props) {
         super(props);
         this.state = {
             value: ""
-        }   
+        }
         this.onChangeValue = this.onChangeValue.bind(this);
     }
 
@@ -19,7 +19,7 @@ export default class InputButton extends Component {
     render() {
         return (
             <div>
-                <input type="text" onChange={this.onChangeValue} value={this.state.value} />
+                <textarea onChange={this.onChangeValue} value={this.state.value} />
                 <button onClick={() => this.handleGetValue()}>
                     {this.props.buttonText}
                 </button>

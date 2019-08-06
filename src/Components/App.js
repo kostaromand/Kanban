@@ -30,12 +30,12 @@ export default class App extends React.Component {
     this.handleGetUserName = this.handleGetUserName.bind(this);
     this.handleAddNewCard = this.handleAddNewCard.bind(this);
     this.handleOpenCard = this.handleOpenCard.bind(this);
-    this.handleChangeCardTitle = this.handleChangeCardTitle.bind(this);
+    this.handleChangeCard = this.handleChangeCard.bind(this);
     this.handleChangeColumnTitle = this.handleChangeColumnTitle.bind(this);
   }
 
   handleChangeColumnTitle(id, newTitle) {
-    if (newTitle === "") {
+    if (newTitle.trim() === "") {
       this.setState({ columnTitleIdEdit: -1 })
       return;
     }
@@ -54,13 +54,14 @@ export default class App extends React.Component {
       return { data, columnTitleIdEdit: -1 }
     });
   }
-  handleChangeCardTitle(id, newTitle) {
-    const oldCard = this.state.data.cards.find(card => card.id === id);
-    const newCard = { ...oldCard, title: newTitle };
+  handleChangeCard(changedCard) {
+    if (changedCard.title.trim() === "") {
+      return;
+    }
     this.setState((prevState) => {
       const cards = this.state.data.cards.map((card) => {
-        if (newCard.id === card.id)
-          return newCard;
+        if (changedCard.id === card.id)
+          return changedCard;
         else
           return card;
       });
@@ -85,11 +86,16 @@ export default class App extends React.Component {
     });
   }
 
-  handleAddNewCard(card) {
-    if (card.title === "")
+  handleAddNewCard(title, columnId) {
+    if (title.trim() === "")
       return;
-    const newCard = { ...card, id: this.state.data.cards.length + 1 };
-    const cards = [...this.state.data.cards, newCard];
+    const card = {
+      title,
+      columnId: columnId,
+      description: "",
+      id: this.state.data.cards.length + 1
+    }
+    const cards = [...this.state.data.cards, card];
     this.setState((prevState) => {
       const data = { ...prevState.data }
       data.cards = cards;
@@ -103,15 +109,20 @@ export default class App extends React.Component {
     this.setState({ openedCardId: id, isCardOpened: true })
   }
 
-  
+  handleKeyPress(event) {
+    if (event.which === 27) {
+      this.setState({ isCardOpened: false });
+    }
+  }
 
   componentDidMount() {
     if (localStorage.getItem("data")) {
       const data = JSON.parse(localStorage.getItem("data"));
       this.setState({ data });
     }
+    document.addEventListener("keydown", (e) => { this.handleKeyPress(e) });
   }
-  
+
   render() {
     let modalWindow = null;
     if (this.state.isCardOpened) {
@@ -122,19 +133,20 @@ export default class App extends React.Component {
       });
       modalWindow =
         (
-          <Modal>
+          <Modal onClose={() => { this.setState({ isCardOpened: false }) }}>
             <Card
               card={card}
               comments={comments}
+              onChangeCard={this.handleChangeCard}
             />
           </Modal>
         )
     }
     if (!this.state.data.userName) {
       return (
-          <Modal>
-            <Welcome onGetUserName={this.handleGetUserName} />
-          </Modal>
+        <Modal>
+          <Welcome onGetUserName={this.handleGetUserName} />
+        </Modal>
       );
     }
     else {
