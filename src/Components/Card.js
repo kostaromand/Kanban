@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import EditableContent from './EditableContent';
 import TextAreaButton from './TextAreaButton';
 import InputButton from './InputButton';
+import CommentList from './CommentList';
 
 export default class Card extends Component {
     constructor(props) {
@@ -53,6 +54,16 @@ export default class Card extends Component {
                         EditComponent={TextAreaButton}
                     />
                 </div>
+                <button onClick={() => { this.props.onRemoveCard(this.props.card.id) }}>
+                    Удалить карточку
+                </button>
+                <CommentList
+                    userName = {this.props.userName}
+                    comments={this.props.comments}
+                    onRemove={this.props.onRemoveComment}
+                    onChange={this.props.onChangeComment}
+                    onAdd={(text)=>{this.props.onAddComment(this.props.card.id,text)}}
+                />
             </div>
         )
     }

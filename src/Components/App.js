@@ -27,11 +27,24 @@ export default class App extends React.Component {
     super(props);
     this.state = INITIAL_STATE;
     this.handleEditColumnTitle = this.handleEditColumnTitle.bind(this);
-    this.handleGetUserName = this.handleGetUserName.bind(this);
-    this.handleAddNewCard = this.handleAddNewCard.bind(this);
+    this.getUserName = this.getUserName.bind(this);
+    this.addNewCard = this.addNewCard.bind(this);
     this.handleOpenCard = this.handleOpenCard.bind(this);
-    this.handleChangeCard = this.handleChangeCard.bind(this);
+    this.changeCard = this.changeCard.bind(this);
     this.handleChangeColumnTitle = this.handleChangeColumnTitle.bind(this);
+  }
+
+  getUserName(userName) {
+    this.setState((prevState) => {
+      const data = { ...prevState.data }
+      data.userName = userName;
+      this.updateStorage(data);
+      return { data }
+    });
+  }
+
+  handleOpenCard(id) {
+    this.setState({ openedCardId: id, isCardOpened: true })
   }
 
   handleChangeColumnTitle(id, newTitle) {
@@ -49,26 +62,8 @@ export default class App extends React.Component {
           return column;
       });
       const data = { ...prevState.data, columns }
-      const dataToJSON = JSON.stringify(data);
-      localStorage.setItem("data", dataToJSON);
+      this.updateStorage(data);
       return { data, columnTitleIdEdit: -1 }
-    });
-  }
-  handleChangeCard(changedCard) {
-    if (changedCard.title.trim() === "") {
-      return;
-    }
-    this.setState((prevState) => {
-      const cards = this.state.data.cards.map((card) => {
-        if (changedCard.id === card.id)
-          return changedCard;
-        else
-          return card;
-      });
-      const data = { ...prevState.data, cards }
-      const dataToJSON = JSON.stringify(data);
-      localStorage.setItem("data", dataToJSON);
-      return { data }
     });
   }
 
@@ -76,17 +71,8 @@ export default class App extends React.Component {
     this.setState({ columnTitleIdEdit: id })
   }
 
-  handleGetUserName(userName) {
-    this.setState((prevState) => {
-      const data = { ...prevState.data }
-      data.userName = userName;
-      const dataToJson = JSON.stringify(data);
-      localStorage.setItem("data", dataToJson);
-      return { data }
-    });
-  }
 
-  handleAddNewCard(title, columnId) {
+  addNewCard(title, columnId) {
     if (title.trim() === "")
       return;
     const card = {
@@ -99,20 +85,94 @@ export default class App extends React.Component {
     this.setState((prevState) => {
       const data = { ...prevState.data }
       data.cards = cards;
-      const dataToJson = JSON.stringify(data);
-      localStorage.setItem("data", dataToJson);
+      this.updateStorage(data);
+      return { data }
+    });
+  }
+  changeCard(changedCard) {
+    if (changedCard.title.trim() === "") {
+      return;
+    }
+    this.setState((prevState) => {
+      const cards = this.state.data.cards.map((card) => {
+        if (changedCard.id === card.id)
+          return changedCard;
+        else
+          return card;
+      });
+      const data = { ...prevState.data, cards }
+      this.updateStorage(data);
+      return { data }
+    });
+  }
+  removeCard = (id) => {
+    this.setState((prevState) => {
+      const cards = prevState.data.cards.filter((card) => card.id !== id);
+      const data = { ...prevState.data }
+      data.cards = cards;
+      this.updateStorage(data);
+      return { data,isCardOpened:false }
+    });
+  }
+
+
+  addComment = (cardId, text) => {
+    if (text.trim() === "") {
+      return;
+    }
+    const comment = {
+      id: this.state.data.comments.length + 1,
+      cardId,
+      text,
+      autor: this.state.data.userName
+    }
+    const comments = [...this.state.data.comments, comment];
+    this.setState((prevState) => {
+      const data = { ...prevState.data }
+      data.comments = comments;
+      this.updateStorage(data);
       return { data }
     });
   }
 
-  handleOpenCard(id) {
-    this.setState({ openedCardId: id, isCardOpened: true })
+  changeComment = (id,text) => {
+    if (text.trim() === "") {
+      return;
+    }
+    const comment = this.state.data.comments.filter(comment => comment.id===id)[0];
+    const changedComment = {...comment,text}
+    this.setState((prevState) => {
+      const comments = this.state.data.comments.map((comment) => {
+        if (id === comment.id)
+          return changedComment;
+        else
+          return comment;
+      });
+      const data = { ...prevState.data, comments }
+      this.updateStorage(data);
+      return { data }
+    });
+  }
+
+  removeComment = (id) => {
+    this.setState((prevState) => {
+      const comments = prevState.data.comments.filter((comment) => comment.id !== id);
+      const data = { ...prevState.data }
+      data.comments = comments;
+      this.updateStorage(data);
+      return { data }
+    });
   }
 
   handleKeyPress(event) {
     if (event.which === 27) {
       this.setState({ isCardOpened: false });
     }
+  }
+
+  updateStorage(data) {
+    const dataToJson = JSON.stringify(data);
+    localStorage.setItem("data", dataToJson);
   }
 
   componentDidMount() {
@@ -135,9 +195,14 @@ export default class App extends React.Component {
         (
           <Modal onClose={() => { this.setState({ isCardOpened: false }) }}>
             <Card
+              userName={this.state.data.userName}
               card={card}
               comments={comments}
-              onChangeCard={this.handleChangeCard}
+              onChangeCard={this.changeCard}
+              onRemoveCard={this.removeCard}
+              onRemoveComment={this.removeComment}
+              onAddComment={this.addComment}
+              onChangeComment={this.changeComment}
             />
           </Modal>
         )
@@ -145,7 +210,7 @@ export default class App extends React.Component {
     if (!this.state.data.userName) {
       return (
         <Modal>
-          <Welcome onGetUserName={this.handleGetUserName} />
+          <Welcome onGetUserName={this.getUserName} />
         </Modal>
       );
     }
@@ -157,10 +222,10 @@ export default class App extends React.Component {
               const cards = this.state.data.cards.filter(card => {
                 return card.columnId === column.id
               });
-              const inEdit = this.state.columnTitleIdEdit === column.id ? true : false;
+              const inEdit = this.state.columnTitleIdEdit === column.id
               return <Column
                 key={column.id}
-                onAddNewCard={this.handleAddNewCard}
+                onAddNewCard={this.addNewCard}
                 onOpenCard={this.handleOpenCard}
                 onChangeColumnTitle={this.handleChangeColumnTitle}
                 onEditColumnTitle={this.handleEditColumnTitle}
