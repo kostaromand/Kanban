@@ -18,9 +18,9 @@ export default class InputButton extends Component {
     }
     render() {
         return (
-            <div>
+            <div className = "flex-column">
                 <input type="text" onChange={this.onChangeValue} value={this.state.value} />
-                <button onClick={() => this.handleGetValue()}>
+                <button className="btn btn-primary" onClick={() => this.handleGetValue()}>
                     {this.props.buttonText}
                 </button>
             </div>

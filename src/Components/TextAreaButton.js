@@ -19,8 +19,8 @@ export default class TextAreaButton extends Component {
     render() {
         return (
             <div>
-                <textarea onChange={this.onChangeValue} value={this.state.value} />
-                <button onClick={() => this.handleGetValue()}>
+                <textarea className = "form-control" onChange={this.onChangeValue} value={this.state.value} />
+                <button className="btn btn-primary" onClick={() => this.handleGetValue()}>
                     {this.props.buttonText}
                 </button>
             </div>

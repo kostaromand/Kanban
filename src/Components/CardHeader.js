@@ -9,6 +9,9 @@ export default class CardHeader extends Component {
         return (
             <div className="card-header" onClick={() => { this.props.onClick(this.props.id) }}>
                 {this.props.title}
+                <div className="comments-count">
+                    {this.props.commentsCount}
+                </div>
             </div>
             
         )

@@ -26,15 +26,9 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = INITIAL_STATE;
-    this.handleEditColumnTitle = this.handleEditColumnTitle.bind(this);
-    this.getUserName = this.getUserName.bind(this);
-    this.addNewCard = this.addNewCard.bind(this);
-    this.handleOpenCard = this.handleOpenCard.bind(this);
-    this.changeCard = this.changeCard.bind(this);
-    this.handleChangeColumnTitle = this.handleChangeColumnTitle.bind(this);
   }
 
-  getUserName(userName) {
+  getUserName = (userName) => {
     this.setState((prevState) => {
       const data = { ...prevState.data }
       data.userName = userName;
@@ -43,11 +37,11 @@ export default class App extends React.Component {
     });
   }
 
-  handleOpenCard(id) {
+  handleOpenCard = (id) => {
     this.setState({ openedCardId: id, isCardOpened: true })
   }
 
-  handleChangeColumnTitle(id, newTitle) {
+  handleChangeColumnTitle = (id, newTitle) => {
     if (newTitle.trim() === "") {
       this.setState({ columnTitleIdEdit: -1 })
       return;
@@ -67,12 +61,12 @@ export default class App extends React.Component {
     });
   }
 
-  handleEditColumnTitle(id) {
+  handleEditColumnTitle = (id) => {
     this.setState({ columnTitleIdEdit: id })
   }
 
 
-  addNewCard(title, columnId) {
+  addNewCard = (title, columnId) => {
     if (title.trim() === "")
       return;
     const card = {
@@ -89,7 +83,8 @@ export default class App extends React.Component {
       return { data }
     });
   }
-  changeCard(changedCard) {
+
+  changeCard = (changedCard) => {
     if (changedCard.title.trim() === "") {
       return;
     }
@@ -111,7 +106,7 @@ export default class App extends React.Component {
       const data = { ...prevState.data }
       data.cards = cards;
       this.updateStorage(data);
-      return { data,isCardOpened:false }
+      return { data, isCardOpened: false }
     });
   }
 
@@ -135,12 +130,12 @@ export default class App extends React.Component {
     });
   }
 
-  changeComment = (id,text) => {
+  changeComment = (id, text) => {
     if (text.trim() === "") {
       return;
     }
-    const comment = this.state.data.comments.filter(comment => comment.id===id)[0];
-    const changedComment = {...comment,text}
+    const comment = this.state.data.comments.filter(comment => comment.id === id)[0];
+    const changedComment = { ...comment, text }
     this.setState((prevState) => {
       const comments = this.state.data.comments.map((comment) => {
         if (id === comment.id)
@@ -164,7 +159,7 @@ export default class App extends React.Component {
     });
   }
 
-  handleKeyPress(event) {
+  handleKeyPress = (event) => {
     if (event.which === 27) {
       this.setState({ isCardOpened: false });
     }
@@ -216,24 +211,28 @@ export default class App extends React.Component {
     }
     else {
       return (
-        <div className="flex-row column-container">
-          {
-            this.state.data.columns.map(column => {
-              const cards = this.state.data.cards.filter(card => {
-                return card.columnId === column.id
-              });
-              const inEdit = this.state.columnTitleIdEdit === column.id
-              return <Column
-                key={column.id}
-                onAddNewCard={this.addNewCard}
-                onOpenCard={this.handleOpenCard}
-                onChangeColumnTitle={this.handleChangeColumnTitle}
-                onEditColumnTitle={this.handleEditColumnTitle}
-                column={column}
-                inEdit={inEdit}
-                cards={cards} />
-            })
-          }
+        <div className="container-fluid ">
+          <div className="row column-container">
+            {
+              this.state.data.columns.map(column => {
+                const cards = this.state.data.cards.filter(card => {
+                  return card.columnId === column.id
+                });
+                const inEdit = this.state.columnTitleIdEdit === column.id
+                return <Column
+                  key={column.id}
+                  onAddNewCard={this.addNewCard}
+                  onOpenCard={this.handleOpenCard}
+                  onChangeColumnTitle={this.handleChangeColumnTitle}
+                  onEditColumnTitle={this.handleEditColumnTitle}
+                  column={column}
+                  inEdit={inEdit}
+                  comments={this.state.data.comments}
+                  cards={cards}
+                />
+              })
+            }
+          </div>
           {modalWindow}
         </div>
       );

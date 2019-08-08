@@ -13,7 +13,7 @@ export default class Modal extends Component {
                 this.handleClose(e);
             }}
             >
-                <div className="modal">
+                <div className="modal-window">
                     {this.props.children}
                 </div>
             </div>

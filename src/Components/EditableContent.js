@@ -3,7 +3,7 @@ import React from 'react'
 export default function EditableContent(props) {
     if (!props.inEdit) {
         return (
-            <div onClick={() => { props.onEdit() }}>
+            <div className={props.contentStyle} onClick={() => { props.onEdit() }}>
                 {props.content === "" ? "Изменить" : props.content}
             </div>
         )
