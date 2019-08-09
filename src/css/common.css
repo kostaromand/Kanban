@@ -68,7 +68,7 @@
     margin-bottom: 5px;
     background-color: #fff;
     border-radius: 3px;
-    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .card-header:hover {
@@ -101,12 +101,13 @@
 }
 
 .card-title {
+    word-wrap: break-word;
     align-items: center;
     display: flex;
     flex-direction: column;
     font-weight: 600;
     font-family: sans-serif;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .add-card-button {

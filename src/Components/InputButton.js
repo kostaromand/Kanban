@@ -4,7 +4,7 @@ export default class InputButton extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: ""
+            value: props.initialValue
         }   
     }
 
