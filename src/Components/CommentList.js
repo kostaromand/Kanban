@@ -12,19 +12,19 @@ export default class CommentList extends Component {
     handleEdit = (id) => {
         this.setState({ commentIdInEdit: id })
     }
-    handleChange = (id,text) => {
-        this.props.onChange(id,text);
-        this.setState({commentIdInEdit:-1})
+    handleChange = (id, text) => {
+        this.props.onChange(id, text);
+        this.setState({ commentIdInEdit: -1 })
     }
-    
+
     render() {
         return (
-            <div>
-                {this.props.comments.map((comment,id) => {
+            <div className="comment-list">
+                {this.props.comments.map((comment, id) => {
                     const inEdit = this.state.commentIdInEdit === comment.id;
                     return (
                         <Comment
-                            inEdit = {inEdit}
+                            inEdit={inEdit}
                             userName={this.props.userName}
                             comment={comment}
                             key={comment.id}
@@ -34,10 +34,13 @@ export default class CommentList extends Component {
                         />
                     )
                 })}
-                <TextAreaButton
-                    buttonText="Добавить комментарий"
-                    onGetValue={this.props.onAdd}
-                />
+                <div className="add-comment">
+                    Оставить комментарий
+                    <TextAreaButton
+                        buttonText="Добавить комментарий"
+                        onGetValue={this.props.onAdd}
+                    />
+                </div>
             </div>
         )
     }

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import '../css/common.css'
 import CardHeader from './CardHeader';
 import EditableContent from './EditableContent';
-import InputButton from './InputButton';
 import TextAreaButton from './TextAreaButton';
 
 export default class Column extends Component {
@@ -11,23 +10,22 @@ export default class Column extends Component {
         this.state = {
             addCardToggle: false
         }
-        this.handleChangeColumnTitle = this.handleChangeColumnTitle.bind(this);
     }
 
-    changeAddCardToggle() {
+    addCardToggle = () => {
         this.setState((prevState) => {
             return { addCardToggle: !prevState.addCardToggle }
         });
     }
 
-    handleAddCard(title) {
+    handleAddCard = (title) => {
         this.setState(() => {
             return { addCardToggle: false }
         });
         this.props.onAddNewCard(title, this.props.column.id);
     }
 
-    handleChangeColumnTitle(title) {
+    handleChangeColumnTitle = (title) => {
         this.props.onChangeColumnTitle(this.props.column.id, title)
     }
 
@@ -61,17 +59,19 @@ export default class Column extends Component {
                                 commentsCount={commentsCount}
                             />)
                     })}
-                    <div>
-                        <EditableContent
-                            inEdit={this.state.addCardToggle}
-                            content="Добавить карточку"
-                            onChangeContent={(title) => { this.handleAddCard(title) }}
-                            onEdit={() => { this.changeAddCardToggle() }}
+                    {this.state.addCardToggle ?
+                        <TextAreaButton
+                            initialValue=""
                             buttonText="Добавить"
-                            contentStyle = "add-card-button"
-                            EditComponent={TextAreaButton}
+                            onGetValue={this.handleAddCard}
                         />
-                    </div>
+                        :
+                        <div className="flex-center">
+                            <button onClick={this.addCardToggle} className="btn add-card-button">
+                                Добавить карточку
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
         )

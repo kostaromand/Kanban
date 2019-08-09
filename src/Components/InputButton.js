@@ -6,10 +6,9 @@ export default class InputButton extends Component {
         this.state = {
             value: ""
         }   
-        this.onChangeValue = this.onChangeValue.bind(this);
     }
 
-    onChangeValue(event) {
+    onChangeValue = (event) => {
         this.setState({ value: event.target.value });
     }
 

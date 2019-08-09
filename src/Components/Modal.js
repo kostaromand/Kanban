@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
 import '../css/common.css'
-
+import cross from '../cross.png'
 export default class Modal extends Component {
-    handleClose(event) {
-        if (event.target.classList.contains("overlay")) {
+    handleClose = (event) => {
             this.props.onClose();
-        }
     }
     render() {
         return (
-            <div className="overlay flex-center" onClick={(e) => {
-                this.handleClose(e);
-            }}
-            >
+            <div className="overlay flex-center">
                 <div className="modal-window">
+                <img className="cross-close"
+                 src={cross}
+                 alt="закрыть" 
+                 onClick={this.handleClose}
+                 />
                     {this.props.children}
                 </div>
             </div>

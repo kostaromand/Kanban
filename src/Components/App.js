@@ -102,9 +102,11 @@ export default class App extends React.Component {
   }
   removeCard = (id) => {
     this.setState((prevState) => {
+      const comments = prevState.data.comments.filter((comment) => comment.cardId !== id);
       const cards = prevState.data.cards.filter((card) => card.id !== id);
       const data = { ...prevState.data }
       data.cards = cards;
+      data.comments = comments;
       this.updateStorage(data);
       return { data, isCardOpened: false }
     });
@@ -183,6 +185,7 @@ export default class App extends React.Component {
     if (this.state.isCardOpened) {
       const cardId = this.state.openedCardId;
       const card = this.state.data.cards.find(card => card.id === cardId);
+      const columnTitle = this.state.data.columns.filter(col =>col.id === card.columnId)[0].title;
       const comments = this.state.data.comments.filter(comment => {
         return comment.cardId === cardId;
       });
@@ -192,6 +195,7 @@ export default class App extends React.Component {
             <Card
               userName={this.state.data.userName}
               card={card}
+              columnTitle = {columnTitle}
               comments={comments}
               onChangeCard={this.changeCard}
               onRemoveCard={this.removeCard}

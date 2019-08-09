@@ -3,7 +3,6 @@ import EditableContent from './EditableContent';
 import TextAreaButton from './TextAreaButton';
 import InputButton from './InputButton';
 import CommentList from './CommentList';
-
 export default class Card extends Component {
     constructor(props) {
         super(props);
@@ -32,7 +31,7 @@ export default class Card extends Component {
 
     render() {
         return (
-            <div className="card">
+            <div className="kanban-card">
                 <div className="card-title">
                     <EditableContent
                         inEdit={this.state.titleInEdit}
@@ -43,8 +42,13 @@ export default class Card extends Component {
                         EditComponent={InputButton}
                     />
                 </div>
+                Информация о карточке:
+                <div className="flex-column card-info">
+                    <span>Автор: {this.props.userName}</span>
+                    <span>Колонка: {this.props.columnTitle}</span>
+                </div>
+                Описание карточки:
                 <div className="card-description">
-                    Описание карточки
                     <EditableContent
                         inEdit={this.state.descriptionInEdit}
                         content={this.props.card.description}
@@ -54,15 +58,15 @@ export default class Card extends Component {
                         EditComponent={TextAreaButton}
                     />
                 </div>
-                <button onClick={() => { this.props.onRemoveCard(this.props.card.id) }}>
+                <div className="remove" onClick={() => { this.props.onRemoveCard(this.props.card.id) }}>
                     Удалить карточку
-                </button>
+                </div>
                 <CommentList
-                    userName = {this.props.userName}
+                    userName={this.props.userName}
                     comments={this.props.comments}
                     onRemove={this.props.onRemoveComment}
                     onChange={this.props.onChangeComment}
-                    onAdd={(text)=>{this.props.onAddComment(this.props.card.id,text)}}
+                    onAdd={(text) => { this.props.onAddComment(this.props.card.id, text) }}
                 />
             </div>
         )
