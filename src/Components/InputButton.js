@@ -4,10 +4,13 @@ export default class InputButton extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: props.initialValue
+            value: ""
         }   
     }
 
+    componentDidMount(){
+        this.setState({value:this.props.initialValue})
+    }
     onChangeValue = (event) => {
         this.setState({ value: event.target.value });
     }
