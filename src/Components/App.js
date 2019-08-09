@@ -215,7 +215,7 @@ export default class App extends React.Component {
     }
     else {
       return (
-        <div className="container-fluid ">
+        <div className="container-fluid">
           <div className="row column-container">
             {
               this.state.data.columns.map(column => {
