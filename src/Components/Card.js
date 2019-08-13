@@ -4,26 +4,23 @@ import TextAreaButton from './TextAreaButton';
 import InputButton from './InputButton';
 import CommentList from './CommentList';
 export default class Card extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            titleInEdit: false,
-            descriptionInEdit: false
-        }
+    state = {
+        titleInEdit: false,
+        descriptionInEdit: false
     }
 
-    handleEditTitle() {
+    handleEditTitle = () => {
         this.setState({ titleInEdit: true })
     }
-    handleChangeTitle(title) {
+    handleChangeTitle = (title) => {
         this.setState({ titleInEdit: false })
         const changedCard = { ...this.props.card, title }
         this.props.onChangeCard(changedCard)
     }
-    handleEditDescription() {
+    handleEditDescription = () => {
         this.setState({ descriptionInEdit: true })
     }
-    handleChangeDescription(description) {
+    handleChangeDescription = (description) => {
         this.setState({ descriptionInEdit: false })
         const changedCard = { ...this.props.card, description }
         this.props.onChangeCard(changedCard)
@@ -36,9 +33,9 @@ export default class Card extends Component {
                     <EditableContent
                         inEdit={this.state.titleInEdit}
                         content={this.props.card.title}
-                        onEdit={() => { this.handleEditTitle() }}
+                        onEdit={this.handleEditTitle}
                         buttonText={"Изменить"}
-                        onChangeContent={(title) => { this.handleChangeTitle(title) }}
+                        onChangeContent={this.handleChangeTitle}
                         EditComponent={InputButton}
                     />
                 </div>
@@ -52,9 +49,9 @@ export default class Card extends Component {
                     <EditableContent
                         inEdit={this.state.descriptionInEdit}
                         content={this.props.card.description}
-                        onEdit={() => { this.handleEditDescription() }}
+                        onEdit={this.handleEditDescription}
                         buttonText={"Изменить"}
-                        onChangeContent={(description) => this.handleChangeDescription(description)}
+                        onChangeContent={this.handleChangeDescription}
                         EditComponent={TextAreaButton}
                     />
                 </div>

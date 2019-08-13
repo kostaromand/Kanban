@@ -23,10 +23,7 @@ const INITIAL_STATE = {
 }
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = INITIAL_STATE;
-  }
+  state = INITIAL_STATE;
 
   getUserName = (userName) => {
     this.setState((prevState) => {
@@ -167,7 +164,7 @@ export default class App extends React.Component {
     }
   }
 
-  updateStorage(data) {
+  updateStorage = (data) => {
     const dataToJson = JSON.stringify(data);
     localStorage.setItem("data", dataToJson);
   }
@@ -185,7 +182,7 @@ export default class App extends React.Component {
     if (this.state.isCardOpened) {
       const cardId = this.state.openedCardId;
       const card = this.state.data.cards.find(card => card.id === cardId);
-      const columnTitle = this.state.data.columns.filter(col =>col.id === card.columnId)[0].title;
+      const columnTitle = this.state.data.columns.filter(col => col.id === card.columnId)[0].title;
       const comments = this.state.data.comments.filter(comment => {
         return comment.cardId === cardId;
       });
@@ -195,7 +192,7 @@ export default class App extends React.Component {
             <Card
               userName={this.state.data.userName}
               card={card}
-              columnTitle = {columnTitle}
+              columnTitle={columnTitle}
               comments={comments}
               onChangeCard={this.changeCard}
               onRemoveCard={this.removeCard}

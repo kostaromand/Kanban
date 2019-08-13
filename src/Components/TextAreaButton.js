@@ -6,14 +6,13 @@ export default class TextAreaButton extends Component {
         this.state = {
             value: props.initialValue
         }
-        this.onChangeValue = this.onChangeValue.bind(this);
     }
 
-    onChangeValue(event) {
+    onChangeValue = (event) => {
         this.setState({ value: event.target.value });
     }
 
-    handleGetValue() {
+    handleGetValue = () => {
         this.props.onGetValue(this.state.value)
         this.setState({ value: "" })
     }
@@ -21,7 +20,7 @@ export default class TextAreaButton extends Component {
         return (
             <div>
                 <textarea className="form-control" onChange={this.onChangeValue} value={this.state.value} />
-                <button className="btn btn-primary" onClick={() => this.handleGetValue()}>
+                <button className="btn btn-primary" onClick={this.handleGetValue}>
                     {this.props.buttonText}
                 </button>
             </div>

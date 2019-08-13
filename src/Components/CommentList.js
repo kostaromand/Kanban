@@ -3,11 +3,8 @@ import TextAreaButton from './TextAreaButton';
 import Comment from './Comment'
 
 export default class CommentList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            commentIdInEdit: -1
-        }
+    state = {
+        commentIdInEdit: -1
     }
     handleEdit = (id) => {
         this.setState({ commentIdInEdit: id })

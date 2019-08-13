@@ -5,11 +5,8 @@ import EditableContent from './EditableContent';
 import TextAreaButton from './TextAreaButton';
 
 export default class Column extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            addCardToggle: false
-        }
+    state = {
+        addCardToggle: false
     }
 
     addCardToggle = () => {
@@ -29,7 +26,7 @@ export default class Column extends Component {
         this.props.onChangeColumnTitle(this.props.column.id, title)
     }
 
-    handleEditTitle() {
+    handleEditTitle = () => {
         this.props.onEditColumnTitle(this.props.column.id);
     }
 
@@ -42,7 +39,7 @@ export default class Column extends Component {
                             inEdit={this.props.inEdit}
                             content={this.props.column.title}
                             onChangeContent={this.handleChangeColumnTitle}
-                            onEdit={() => { this.handleEditTitle() }}
+                            onEdit={this.handleEditTitle}
                             buttonText="Изменить"
                             EditComponent={TextAreaButton}
                         />
