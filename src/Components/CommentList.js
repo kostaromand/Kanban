@@ -17,7 +17,7 @@ export default class CommentList extends Component {
     render() {
         return (
             <div className="comment-list">
-                {this.props.comments.map((comment, id) => {
+                {this.props.comments.map((comment) => {
                     const inEdit = this.state.commentIdInEdit === comment.id;
                     return (
                         <Comment

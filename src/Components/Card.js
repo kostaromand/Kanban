@@ -63,7 +63,13 @@ export default class Card extends Component {
                     comments={this.props.comments}
                     onRemove={this.props.onRemoveComment}
                     onChange={this.props.onChangeComment}
-                    onAdd={(text) => { this.props.onAddComment(this.props.card.id, text) }}
+                    onAdd={(text) => {
+                        this.props.onAddComment(
+                            this.props.card.id,
+                            text,
+                            this.props.userName
+                        )
+                    }}
                 />
             </div>
         )
