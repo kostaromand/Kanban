@@ -10,76 +10,10 @@ import Modal from './Modal';
 
 class App extends React.Component {
 
-  removeCard = (id) => {
-    this.setState((prevState) => {
-      const comments = prevState.data.comments.filter((comment) => comment.cardId !== id);
-      const cards = prevState.data.cards.filter((card) => card.id !== id);
-      const data = { ...prevState.data }
-      data.cards = cards;
-      data.comments = comments;
-      this.updateStorage(data);
-      return { data, isCardOpened: false }
-    });
-  }
-
-
-  addComment = (cardId, text) => {
-    if (text.trim() === "") {
-      return;
-    }
-    const comment = {
-      id: this.state.data.comments.length + 1,
-      cardId,
-      text,
-      autor: this.state.data.userName
-    }
-    const comments = [...this.state.data.comments, comment];
-    this.setState((prevState) => {
-      const data = { ...prevState.data }
-      data.comments = comments;
-      this.updateStorage(data);
-      return { data }
-    });
-  }
-
-  changeComment = (id, text) => {
-    if (text.trim() === "") {
-      return;
-    }
-    const comment = this.state.data.comments.filter(comment => comment.id === id)[0];
-    const changedComment = { ...comment, text }
-    this.setState((prevState) => {
-      const comments = this.state.data.comments.map((comment) => {
-        if (id === comment.id)
-          return changedComment;
-        else
-          return comment;
-      });
-      const data = { ...prevState.data, comments }
-      this.updateStorage(data);
-      return { data }
-    });
-  }
-
-  removeComment = (id) => {
-    this.setState((prevState) => {
-      const comments = prevState.data.comments.filter((comment) => comment.id !== id);
-      const data = { ...prevState.data }
-      data.comments = comments;
-      this.updateStorage(data);
-      return { data }
-    });
-  }
-
   handleKeyPress = (event) => {
     if (event.which === 27) {
-      this.setState({ isCardOpened: false });
+      this.props.closeCard();
     }
-  }
-
-  updateStorage = (data) => {
-    const dataToJson = JSON.stringify(data);
-    localStorage.setItem("data", dataToJson);
   }
 
   componentDidMount() {
