@@ -2,7 +2,7 @@ import React from 'react'
 import '../css/common.css'
 import InputButton from './InputButton';
 import { connect } from 'react-redux'
-import {setUserNameThunk as setUserName} from '../redux/actions/user';
+import {setUserNameThunk as setUserName} from '../redux/actions/userActions';
 
 function Welcome({ setUserName }) {
     return (

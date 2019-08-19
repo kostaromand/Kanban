@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from "react-redux"
 import Column from './Column';
-import { openCard, addCardThunk as addCard } from '../redux/actions/cards'
+import { openCard, addCardThunk as addCard } from '../redux/actions/cardsActions'
 import {
     changeColumnTitleThunk as changeColumnTitle,
     editColumnTitle
-} from '../redux/actions/columns'
+} from '../redux/actions/columnsActions'
 
 function ColumnsContainer(props) {
     const { cards, columns, comments, columnTitleIdEdit } = props;

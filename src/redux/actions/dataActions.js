@@ -1,7 +1,7 @@
-import { setCards } from './cards';
-import { setColumns,setDefaultColumns } from './columns';
-import { setUserName } from './user';
-import { setComments } from './comments';
+import { setCards } from './cardsActions';
+import { setColumns,setDefaultColumns } from './columnsActions';
+import { setUserName } from './userActions';
+import { setComments } from './commentsActions';
 
 export const getDataThunk = () => dispatch => {
     dispatch(getData())

@@ -6,12 +6,12 @@ import {
     closeCard,
     changeCardThunk as changeCard,
     removeCardThunk as removeCard,
-} from '../redux/actions/cards'
+} from '../redux/actions/cardsActions'
 import {
     removeCommentThunk as removeComment,
     addCommentThunk as addComment,
     changeCommentThunk as changeComment,
-} from '../redux/actions/comments'
+} from '../redux/actions/commentsActions'
 
 function CardContainer(props) {
     const { cards, columns, userName, comments, cardId } = props;

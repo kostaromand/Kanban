@@ -3,7 +3,7 @@ import Welcome from './Welcome';
 import '../css/common.css'
 import { connect } from "react-redux"
 import { getDataThunk as getData } from '../redux/actions/dataActions'
-import { closeCard } from '../redux/actions/cards'
+import { closeCard } from '../redux/actions/cardsActions'
 import ColumnsContainer from './ColumnsContainer';
 import CardContainer from './CardContainer';
 import Modal from './Modal';
