@@ -2,20 +2,25 @@ import React from 'react';
 import Modal from './Modal';
 import Card from './Card';
 import { connect } from "react-redux"
+import { getCards, getOpenedCardId } from '../redux/reducers/cards/selectors'
+import { getUserName } from '../redux/reducers/user/selectors'
+import { getColumns } from '../redux/reducers/columns/selectors'
+import { getComments } from '../redux/reducers/comments/selectors'
+import { bindActionCreators } from 'redux'
 import {
     closeCard,
     changeCardThunk as changeCard,
     removeCardThunk as removeCard,
-} from '../redux/actions/cardsActions'
+} from '../redux/reducers/cards/actions'
 import {
     removeCommentThunk as removeComment,
     addCommentThunk as addComment,
     changeCommentThunk as changeComment,
-} from '../redux/actions/commentsActions'
+} from '../redux/reducers/comments/actions'
 
 function CardContainer(props) {
     const { cards, columns, userName, comments, cardId } = props;
-    const { closeCard, changeCard, removeCard, removeComment,addComment, changeComment } = props;
+    const { closeCard, changeCard, removeCard, removeComment, addComment, changeComment } = props;
     const card = cards.find(card => card.id === cardId);
     const columnTitle = columns.filter(col => col.id === card.columnId)[0].title;
     const commentsOnCard = comments.filter(comment => {
@@ -39,17 +44,29 @@ function CardContainer(props) {
 }
 
 const mapStateToProps = (state) => {
-    const { cardStore, columnStore, commentStore, userStore } = state
     return {
-        cards: cardStore.cards,
-        columns: columnStore.columns,
-        comments: commentStore.comments,
-        cardId: cardStore.openedCardId,
-        userName: userStore.userName
+        cards: getCards(state),
+        columns: getColumns(state),
+        comments: getComments(state),
+        cardId: getOpenedCardId(state),
+        userName: getUserName(state)
     }
 }
 
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators({
+        closeCard,
+        changeCard,
+        removeCard,
+        removeComment,
+        changeComment,
+        addComment
+    },
+        dispatch
+    );
+
+
 export default connect(
     mapStateToProps,
-    { closeCard, changeCard, removeCard, removeComment, changeComment, addComment }
+    mapDispatchToProps
 )(CardContainer);

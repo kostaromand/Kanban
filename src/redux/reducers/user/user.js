@@ -1,10 +1,12 @@
+import { USERNAME_SET } from './types';
+
 const initialState = {
     userName: ""
 }
 
-export const userReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
-        case "USERNAME_SET":
+        case USERNAME_SET:
             return {
                 userName: action.userName
             }

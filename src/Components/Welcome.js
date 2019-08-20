@@ -2,8 +2,8 @@ import React from 'react'
 import '../css/common.css'
 import InputButton from './InputButton';
 import { connect } from 'react-redux'
-import {setUserNameThunk as setUserName} from '../redux/actions/userActions';
-
+import { setUserNameThunk as setUserName } from '../redux/reducers/user/actions';
+import { bindActionCreators } from 'redux'
 function Welcome({ setUserName }) {
     return (
         <div className="welcome-container">
@@ -15,7 +15,16 @@ function Welcome({ setUserName }) {
     )
 }
 
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators({
+        setUserName
+    },
+        dispatch
+    );
+
+
+
 export default connect(
     null,
-    {setUserName}
-    )(Welcome);
+    mapDispatchToProps
+)(Welcome);

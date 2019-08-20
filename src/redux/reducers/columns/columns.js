@@ -1,16 +1,23 @@
+import {
+    COLUMNS_SET,
+    COLUMNS_SET_DEFAULT,
+    COLUMN_TITLE_EDIT,
+    COLUMN_TITLE_CHANGE
+} from './types'
+
 const initialState = {
     columns: [],
     columnTitleIdEdit: -1
 }
 
-export const columnsReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
-        case "COLUMNS_SET":
+        case COLUMNS_SET:
             return {
                 ...state,
                 columns: action.payload
             }
-        case "COLUMNS_SET_DEFAULT":
+        case COLUMNS_SET_DEFAULT:
             return {
                 ...state,
                 columns: [
@@ -20,12 +27,12 @@ export const columnsReducer = (state = initialState, action) => {
                     { title: "Done", id: 3 }
                 ]
             };
-        case "COLUMN_TITLE_EDIT":
+        case COLUMN_TITLE_EDIT:
             return {
                 ...state,
                 columnTitleIdEdit: action.id
             }
-        case "COLUMN_TITLE_CHANGE":
+        case COLUMN_TITLE_CHANGE:
             const { id, title } = action;
             if (title.trim() === "") {
                 return {

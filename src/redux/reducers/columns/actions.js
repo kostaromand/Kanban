@@ -1,4 +1,10 @@
-import { updateDataThunk as updateData } from './dataActions'
+import { updateDataThunk as updateData } from '../data/actions'
+import {
+    COLUMNS_SET,
+    COLUMNS_SET_DEFAULT,
+    COLUMN_TITLE_EDIT,
+    COLUMN_TITLE_CHANGE
+} from './types'
 
 export const changeColumnTitleThunk = (title, id) => dispatch => {
     dispatch(changeColumnTitle(title, id));
@@ -7,26 +13,26 @@ export const changeColumnTitleThunk = (title, id) => dispatch => {
 
 export const setColumns = (columns) => {
     return {
-        type: "COLUMNS_SET",
+        type: COLUMNS_SET,
         payload: columns,
     }
 }
 
 export const setDefaultColumns = () => {
-    return { type: "COLUMNS_SET_DEFAULT" };
+    return { type: COLUMNS_SET_DEFAULT };
 }
 
 
 export const editColumnTitle = (id) => {
     return {
-        type: "COLUMN_TITLE_EDIT",
+        type: COLUMN_TITLE_EDIT,
         id
     }
 }
 
 export const changeColumnTitle = (id,title) => {
     return {
-        type: "COLUMN_TITLE_CHANGE",
+        type: COLUMN_TITLE_CHANGE,
         id,
         title
     }

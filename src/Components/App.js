@@ -1,12 +1,15 @@
-import React from 'react';
-import Welcome from './Welcome';
+import React from 'react'
+import Welcome from './Welcome'
 import '../css/common.css'
+import ColumnsContainer from './ColumnsContainer'
+import CardContainer from './CardContainer'
+import Modal from './Modal'
 import { connect } from "react-redux"
-import { getDataThunk as getData } from '../redux/actions/dataActions'
-import { closeCard } from '../redux/actions/cardsActions'
-import ColumnsContainer from './ColumnsContainer';
-import CardContainer from './CardContainer';
-import Modal from './Modal';
+import { getDataThunk as getData } from '../redux/reducers/data/actions'
+import { closeCard } from '../redux/reducers/cards/actions'
+import { getUserName } from '../redux/reducers/user/selectors'
+import { getOpenedCardId } from '../redux/reducers/cards/selectors'
+import { bindActionCreators } from 'redux'
 
 class App extends React.Component {
 
@@ -47,12 +50,21 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userName: state.userStore.userName,
-    openedCardId: state.cardStore.openedCardId
+    userName: getUserName(state),
+    openedCardId: getOpenedCardId(state)
   }
 }
 
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({
+    getData,
+    closeCard
+  },
+    dispatch
+  );
+
+
 export default connect(
   mapStateToProps,
-  { getData, closeCard }
+  mapDispatchToProps
 )(App)

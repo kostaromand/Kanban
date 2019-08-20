@@ -1,10 +1,17 @@
+import {
+    COMMENT_ADD,
+    COMMENT_REMOVE,
+    COMMENT_CHANGE,
+    COMMENTS_SET,
+} from './types'
+import { CARD_REMOVE } from '../cards/types'
+
 const initialState = {
     comments: []
 }
-
-export const commentsReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
-        case "COMMENT_ADD":
+        case COMMENT_ADD:
             {
                 const { cardId, text, userName } = action;
                 if (text.trim() === "") {
@@ -19,12 +26,12 @@ export const commentsReducer = (state = initialState, action) => {
                 const comments = [...state.comments, comment];
                 return { comments }
             }
-        case "COMMENT_REMOVE": {
+        case COMMENT_REMOVE: {
             const { id } = action;
             const comments = state.comments.filter((comment) => comment.id !== id);
             return { comments }
         }
-        case "COMMENT_CHANGE":
+        case COMMENT_CHANGE:
             {
                 const { id, text } = action;
                 if (text.trim() === "") {
@@ -41,12 +48,12 @@ export const commentsReducer = (state = initialState, action) => {
                 return { comments }
             }
 
-        case "COMMENTS_SET":
+        case COMMENTS_SET:
             return {
                 ...state,
-                cards: action.payload
+                comments: action.payload
             }
-        case "CARD_REMOVE":
+        case CARD_REMOVE:
             const { id } = action
             const comments = state.comments.filter(comment => comment.cardId !== id);
             return { comments }

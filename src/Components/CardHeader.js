@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import comment from "../com.png";
+import comment from "../img/comment.png";
 export default class CardHeader extends Component {
     render() {
         return (

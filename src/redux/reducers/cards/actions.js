@@ -1,4 +1,12 @@
-import { updateDataThunk as updateData } from './dataActions'
+import { updateDataThunk as updateData } from '../data/actions'
+import {
+    CARD_ADD,
+    CARD_REMOVE,
+    CARD_CHANGE,
+    CARDS_SET,
+    CARD_OPEN,
+    CARD_CLOSE
+} from './types'
 
 export const addCardThunk = (title, columnId) => dispatch => {
     dispatch(addCard(title, columnId));
@@ -7,7 +15,7 @@ export const addCardThunk = (title, columnId) => dispatch => {
 
 export const addCard = (title, columnId) => {
     return {
-        type: "CARD_ADD",
+        type: CARD_ADD,
         title,
         columnId
     }
@@ -15,7 +23,7 @@ export const addCard = (title, columnId) => {
 
 export const closeCard = () => {
     return {
-        type: "CARD_CLOSE"
+        type: CARD_CLOSE
     }
 }
 
@@ -27,7 +35,7 @@ export const removeCardThunk = (id) => dispatch => {
 
 export const removeCard = (id) => {
     return {
-        type: "CARD_REMOVE",
+        type: CARD_REMOVE,
         id
     }
 }
@@ -39,22 +47,22 @@ export const changeCardThunk = (card) => dispatch => {
 
 export const changeCard = (card) => {
     return {
-        type: "CARD_CHANGE",
+        type: CARD_CHANGE,
         card
     }
 }
 
-
 export const setCards = (cards) => {
     return {
-        type: "CARDS_SET",
+        type: CARDS_SET,
         payload: cards
     }
 }
 
 export const openCard = (cardId) => {
     return {
-        type: "CARD_OPEN",
+        type: CARD_OPEN,
         payload: cardId
     }
 }
+

@@ -1,11 +1,15 @@
 import React from 'react'
 import { connect } from "react-redux"
 import Column from './Column';
-import { openCard, addCardThunk as addCard } from '../redux/actions/cardsActions'
+import { openCard, addCardThunk as addCard } from '../redux/reducers/cards/actions'
+import { getCards } from '../redux/reducers/cards/selectors'
+import { getColumns, getColumnTitleIdEdit } from '../redux/reducers/columns/selectors'
+import { getComments } from '../redux/reducers/comments/selectors'
+import { bindActionCreators } from 'redux'
 import {
     changeColumnTitleThunk as changeColumnTitle,
     editColumnTitle
-} from '../redux/actions/columnsActions'
+} from '../redux/reducers/columns/actions'
 
 function ColumnsContainer(props) {
     const { cards, columns, comments, columnTitleIdEdit } = props;
@@ -39,14 +43,25 @@ function ColumnsContainer(props) {
 
 const mapStateToProps = (state) => {
     return {
-        cards: state.cardStore.cards,
-        columns: state.columnStore.columns,
-        comments: state.commentStore.comments,
-        columnTitleIdEdit: state.columnStore.columnTitleIdEdit
+        cards: getCards(state),
+        columns: getColumns(state),
+        comments: getComments(state),
+        columnTitleIdEdit: getColumnTitleIdEdit(state)
     }
 }
 
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators({
+        changeColumnTitle,
+        editColumnTitle,
+        openCard,
+        addCard
+    },
+        dispatch
+    );
+
+
 export default connect(
     mapStateToProps,
-    { changeColumnTitle, editColumnTitle, openCard, addCard }
+    mapDispatchToProps
 )(ColumnsContainer)

@@ -1,17 +1,19 @@
-import { updateDataThunk as updateData } from './dataActions'
-
-
+import {
+    COMMENT_ADD,
+    COMMENT_REMOVE,
+    COMMENT_CHANGE,
+    COMMENTS_SET,
+} from './types'
+import { updateDataThunk as updateData } from '../data/actions'
 
 export const addCommentThunk = (cardId, text) => dispatch => {
     dispatch(addComment(cardId, text));
     dispatch(updateData());
 }
 
-
-
 export const addComment = (cardId, text) => {
     return {
-        type: "COMMENT_ADD",
+        type: COMMENT_ADD,
         text,
         cardId
     }
@@ -24,7 +26,7 @@ export const changeCommentThunk = (id, text) => dispatch => {
 
 export const changeComment = (id, text) => {
     return {
-        type: "COMMENT_CHANGE",
+        type: COMMENT_CHANGE,
         text,
         id
     }
@@ -37,14 +39,14 @@ export const removeCommentThunk = (id) => dispatch => {
 
 export const removeComment = (id) => {
     return {
-        type: "COMMENT_REMOVE",
+        type: COMMENT_REMOVE,
         id
     }
 }
 
 export const setComments = (comments) => {
     return {
-        type: "COMMENTS_SET",
+        type: COMMENTS_SET,
         payload: comments
     }
 }
