@@ -7,8 +7,7 @@ import Modal from './Modal'
 import { connect } from "react-redux"
 import { getDataThunk as getData } from '../redux/reducers/data/actions'
 import { closeCard } from '../redux/reducers/cards/actions'
-import { getUserName } from '../redux/reducers/user/selectors'
-import { getOpenedCardId } from '../redux/reducers/cards/selectors'
+import { getOpenedCardId, getUserName } from '../redux/selectors'
 import { bindActionCreators } from 'redux'
 
 class App extends React.Component {
@@ -62,7 +61,6 @@ const mapDispatchToProps = (dispatch) =>
   },
     dispatch
   );
-
 
 export default connect(
   mapStateToProps,

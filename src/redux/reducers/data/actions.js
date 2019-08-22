@@ -2,10 +2,12 @@ import { setCards } from '../cards/actions';
 import { setColumns, setDefaultColumns } from '../columns/actions';
 import { setUserName } from '../user/actions';
 import { setComments } from '../comments/actions';
-import { getUserName } from '../user/selectors'
-import { getColumns } from '../columns/selectors'
-import { getCards } from '../cards/selectors'
-import { getComments } from '../comments/selectors'
+import {
+    getUserName,
+    getColumns,
+    getCards,
+    getComments
+} from '../../selectors'
 import {
     DATA_GET,
     STORAGE_UPDATE

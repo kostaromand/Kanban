@@ -2,15 +2,17 @@ import React from 'react'
 import { connect } from "react-redux"
 import Column from './Column';
 import { openCard, addCardThunk as addCard } from '../redux/reducers/cards/actions'
-import { getCards } from '../redux/reducers/cards/selectors'
-import { getColumns, getColumnTitleIdEdit } from '../redux/reducers/columns/selectors'
-import { getComments } from '../redux/reducers/comments/selectors'
 import { bindActionCreators } from 'redux'
 import {
     changeColumnTitleThunk as changeColumnTitle,
     editColumnTitle
 } from '../redux/reducers/columns/actions'
-
+import {
+    getCards,
+    getColumns,
+    getColumnTitleIdEdit,
+    getComments
+} from '../redux/selectors'
 function ColumnsContainer(props) {
     const { cards, columns, comments, columnTitleIdEdit } = props;
     const { changeColumnTitle, editColumnTitle, openCard, addCard } = props;

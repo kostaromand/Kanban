@@ -2,11 +2,14 @@ import React from 'react';
 import Modal from './Modal';
 import Card from './Card';
 import { connect } from "react-redux"
-import { getCards, getOpenedCardId } from '../redux/reducers/cards/selectors'
-import { getUserName } from '../redux/reducers/user/selectors'
-import { getColumns } from '../redux/reducers/columns/selectors'
-import { getComments } from '../redux/reducers/comments/selectors'
 import { bindActionCreators } from 'redux'
+import {
+    getColumns,
+    getUserName,
+    getComments,
+    getCards,
+    getOpenedCardId
+} from '../redux/selectors'
 import {
     closeCard,
     changeCardThunk as changeCard,
